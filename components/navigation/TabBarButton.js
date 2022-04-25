@@ -3,7 +3,6 @@ import React from "react";
 import defaultStyles from "../../constans/default-styles";
 import Colors from "../../constans/Colors";
 
-
 const TabBarButton = (props) => {
   return (
     <TouchableOpacity style={styles.container} onPress={props.onPress}>

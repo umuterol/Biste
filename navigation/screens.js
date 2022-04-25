@@ -3,7 +3,7 @@ import LoginScreen from "../screens/auth/LoginScreen";
 import VerificationCodeScreen from "../screens/auth/VerificationCodeScreen";
 //root screens
 import HomeScreen from "../screens/root/HomeScreen";
-import RidingScreen from "../screens/root/RidingScreen";
+import RidingScreen from "../screens/RidingScreen";
 import StationScreen from "../screens/root/StationScreen";
 //settings screens
 import SettingsScreen from "../screens/settings/SettingsScreen";

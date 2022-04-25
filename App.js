@@ -10,6 +10,7 @@ import ReduxThunk from "redux-thunk";
 import notificationsReducers from "./store/reducers/notifications";
 import Colors from "./constans/Colors";
 
+
 const rootReducer = combineReducers({
   notifications: notificationsReducers,
 });
@@ -26,7 +27,7 @@ export default function App() {
   useEffect(() => {
     setTimeout(() => {
       setTestLoading(false);
-    }, 3000);
+    }, 500);
   }, []);
 
   if (testLoading || !loaded) {

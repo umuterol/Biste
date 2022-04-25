@@ -8,6 +8,7 @@ const IconButton = (props) => {
     <TouchableOpacity
       style={[styles.container, props.style]}
       onPress={props.onPress}
+      activeOpacity={props.opacity}
     >
       <Icon
         name={props.name}

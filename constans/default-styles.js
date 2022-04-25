@@ -2,13 +2,13 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   shadow: {
-    shadowColor: "#7F5DF0",
+    shadowColor: "black",
     shadowOffset: {
       width: 0,
       height: 10,
     },
     shadowOpacity: 0.25,
-    shadowRadius: 3.5,
+    shadowRadius: 5,
     elevation: 5,
   },
 });

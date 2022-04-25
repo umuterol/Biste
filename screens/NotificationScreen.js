@@ -21,25 +21,23 @@ const NotificationScreen = (props) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1 }}>
-        <View style={styles.container}>
-          <Ionicons
-            name="notifications-circle"
-            size={30}
-            color={Colors.primary}
-          />
-        </View>
-        <ScrollView style={{ marginTop: 20 }}>
-          {allNotifications.map((notification) => (
-            <Notification
-              key={Math.random()}
-              message={notification.message}
-              date={notification.date}
-              read={notification.read}
-            />
-          ))}
-        </ScrollView>
+      <View style={styles.iconContainer}>
+        <Ionicons
+          name="notifications-circle"
+          size={40}
+          color={Colors.primary}
+        />
       </View>
+      <ScrollView style={{ marginTop: 10 }}>
+        {allNotifications.map((notification) => (
+          <Notification
+            key={Math.random()}
+            message={notification.message}
+            date={notification.date}
+            read={notification.read}
+          />
+        ))}
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -47,7 +45,7 @@ const NotificationScreen = (props) => {
 export default NotificationScreen;
 
 const styles = StyleSheet.create({
-  container: {
+  iconContainer: {
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,

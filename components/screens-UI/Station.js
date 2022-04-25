@@ -25,7 +25,8 @@ const Station = (props) => {
       id={props.iconId}
       name={props.iconName}
       style={[styles.station, props.style]}
-      onPress={() => {}}
+      onPress={props.onPress}
+      opacity={0.7}
     >
       <Text style={styles.textStation}>{props.title}</Text>
       {props.noPark || props.noBike ? (
@@ -45,7 +46,7 @@ export default Station;
 const styles = StyleSheet.create({
   station: {
     width: "50%",
-    height: Dimensions.get("screen").height / 2,
+    height: Dimensions.get("window").height / 2,
     padding: 10,
   },
   warningContainer: {

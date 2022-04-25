@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import BrandTopHeader from "../components/navigation/BrandTopHeader";
+import RidingInfoTouch from "../components/screens-UI/RidingInfoTouch";
 import Colors from "../constans/Colors";
 import Screens from "./screens";
 import TabBarIcon from "../components/navigation/TabBarIcon";
@@ -7,7 +7,6 @@ import TabBarButton from "../components/navigation/TabBarButton";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import * as notificationsActions from "../store/actions/notifications";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -28,29 +27,22 @@ const AuthStackNavigator = () => (
 const RootStackNavigator = () => (
   <Stack.Navigator
     screenOptions={{
-      headerStyle: { backgroundColor: Colors.accent },
-      headerTitleStyle: { color: "#fff", fontFamily: "brand" },
-      headerTitleAlign: "center",
       headerShown: false,
     }}
   >
-    <Stack.Screen
-      name="HomeScreen"
-      component={Screens.HomeScreen}
-      options={{
-        headerShown: false,
-        headerTitle: () => <BrandTopHeader />,
-      }}
-    />
-    <Stack.Screen
-      name="RidingScreen"
-      component={Screens.RidingScreen}
-      options={{ headerTitle: "Riding" }}
-    />
+    <Stack.Screen name="HomeScreen" component={Screens.HomeScreen} />
     <Stack.Screen
       name="StationScreen"
       component={Screens.StationScreen}
-      options={{ headerTitle: "Station" }}
+      options={({ route }) => ({
+        headerShown: true,
+        headerTintColor: "#fff",
+        headerTitleStyle: { color: "#fff", fontFamily: "brand" },
+        title: route.params.stationId,
+        headerStyle: { backgroundColor: route.params.color },
+        headerTitleAlign: "center",
+        headerShadowVisible: false,
+      })}
     />
   </Stack.Navigator>
 );
@@ -105,57 +97,59 @@ const SettingsStackNavigator = () => (
   </Stack.Navigator>
 );
 
-const AppTabNavigator = () => {
+const AppTabNavigator = (props) => {
   const { unreadCount } = useSelector((state) => state.notifications);
-
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarShowLabel: false,
-      }}
-      initialRouteName="RootStackNavigator"
-    >
-      <Tab.Screen
-        name="NotificationScreen"
-        component={Screens.NotificationScreen}
-        options={{
-          tabBarIcon: (props) => (
-            <TabBarIcon
-              {...props}
-              size={30}
-              iconId="Ionicons"
-              iconName="notifications-outline"
-            />
-          ),
-          tabBarBadge: unreadCount || null,
+    <>
+      <RidingInfoTouch {...props} />
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarShowLabel: false,
         }}
-      />
-      <Tab.Screen
-        name="RootStackNavigator"
-        component={RootStackNavigator}
-        options={{
-          tabBarIcon: (props) => (
-            <Ionicons name="home" size={30} color="#fff" />
-          ),
-          tabBarButton: (props) => <TabBarButton {...props} />,
-        }}
-      />
-      <Tab.Screen
-        name="SettingsStackNavigator"
-        component={SettingsStackNavigator}
-        options={{
-          tabBarIcon: (props) => (
-            <TabBarIcon
-              {...props}
-              size={30}
-              iconId="Ionicons"
-              iconName="options"
-            />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+        initialRouteName="RootStackNavigator"
+      >
+        <Tab.Screen
+          name="NotificationScreen"
+          component={Screens.NotificationScreen}
+          options={{
+            tabBarIcon: (props) => (
+              <TabBarIcon
+                {...props}
+                size={30}
+                iconId="Ionicons"
+                iconName="notifications-outline"
+              />
+            ),
+            tabBarBadge: unreadCount || null,
+          }}
+        />
+        <Tab.Screen
+          name="RootStackNavigator"
+          component={RootStackNavigator}
+          options={{
+            tabBarIcon: (props) => (
+              <Ionicons name="home" size={30} color="#fff" />
+            ),
+            tabBarButton: (props) => <TabBarButton {...props} />,
+          }}
+        />
+        <Tab.Screen
+          name="SettingsStackNavigator"
+          component={SettingsStackNavigator}
+          options={{
+            tabBarIcon: (props) => (
+              <TabBarIcon
+                {...props}
+                size={30}
+                iconId="Ionicons"
+                iconName="options"
+              />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </>
   );
 };
 
@@ -168,9 +162,18 @@ export default () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+        initialRouteName="App"
+      >
         <Stack.Screen name="Auth" component={AuthStackNavigator} />
         <Stack.Screen name="App" component={AppTabNavigator} />
+        <Stack.Screen
+          name="RidingScreen"
+          component={Screens.RidingScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
