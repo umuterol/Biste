@@ -5,7 +5,7 @@ import Station from "../../components/screens-UI/Station";
 
 const HomeScreen = (props) => {
   return (
-    <View style={{flex:1}}>
+    <View style={{ flex: 1 }}>
       <ScrollView style={{ flex: 1 }}>
         <View style={styles.stationContainer}>
           <Station
@@ -32,7 +32,7 @@ const HomeScreen = (props) => {
             onPress={() =>
               props.navigation.navigate("StationScreen", {
                 stationId: "kutuphane",
-                color: "orange",
+                color: "#FF7F00",
               })
             }
           />
@@ -60,7 +60,7 @@ const HomeScreen = (props) => {
             onPress={() =>
               props.navigation.navigate("StationScreen", {
                 stationId: "giris",
-                color: Colors.accent,
+                color: Colors.primary,
               })
             }
           />
@@ -74,7 +74,7 @@ const HomeScreen = (props) => {
             onPress={() =>
               props.navigation.navigate("StationScreen", {
                 stationId: "muhendislik",
-                color: "#33ccff",
+                color: Colors.accent,
               })
             }
           />
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#33ccff",
+    backgroundColor: Colors.accent,
   },
   stationDiningHall: {
     borderBottomRightRadius: 500,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   stationLibrary: {
     borderBottomLeftRadius: 500,
-    backgroundColor: "orange",
+    backgroundColor: "#FF7F00",
   },
   stationKyk: {
     borderTopRightRadius: 500,
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   },
   stationDoor: {
     borderTopLeftRadius: 500,
-    backgroundColor: Colors.accent,
+    backgroundColor: Colors.primary,
   },
   stationEngineering: {
     position: "absolute",
@@ -117,6 +117,6 @@ const styles = StyleSheet.create({
     borderRadius: 75,
     zIndex: 0,
     elevation: 0,
-    backgroundColor: "#33ccff",
+    backgroundColor: Colors.accent,
   },
 });

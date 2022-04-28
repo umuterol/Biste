@@ -11,9 +11,10 @@ const CustomButton = (props) => {
       style={{
         ...styles.container,
         borderColor: lineColor || Colors.primary,
+        ...props.style,
       }}
     >
-      <Text style={{ ...styles.text, color: color || "#fff", ...props.style }}>
+      <Text style={{ ...styles.text, color: color || "#fff" }}>
         {props.children}
       </Text>
     </TouchableOpacity>
