@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import RidingInfoTouch from "../components/screens-UI/RidingInfoTouch";
 import Colors from "../constans/Colors";
 import Screens from "./screens";
 import TabBarIcon from "../components/navigation/TabBarIcon";
 import TabBarButton from "../components/navigation/TabBarButton";
 import { Ionicons } from "@expo/vector-icons";
-import { useDispatch, useSelector } from "react-redux";
-import * as notificationsActions from "../store/actions/notifications";
+import { useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -14,7 +13,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const AuthStackNavigator = () => (
+export const AuthStackNavigator = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} />
     <Stack.Screen
@@ -97,7 +96,7 @@ const SettingsStackNavigator = () => (
   </Stack.Navigator>
 );
 
-const AppTabNavigator = (props) => {
+export const AppTabNavigator = (props) => {
   const { unreadCount } = useSelector((state) => state.notifications);
   return (
     <>
@@ -153,27 +152,18 @@ const AppTabNavigator = (props) => {
   );
 };
 
-export default () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(notificationsActions.fetchNotifications());
-  }, []);
-
+export default ({ initialRouteName }) => {
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="App"
+        initialRouteName={initialRouteName || "Auth"}
       >
         <Stack.Screen name="Auth" component={AuthStackNavigator} />
         <Stack.Screen name="App" component={AppTabNavigator} />
-        <Stack.Screen
-          name="RidingScreen"
-          component={Screens.RidingScreen}
-        />
+        <Stack.Screen name="RidingScreen" component={Screens.RidingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

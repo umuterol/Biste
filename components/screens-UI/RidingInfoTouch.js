@@ -17,18 +17,20 @@ const RidingInfoTouch = ({ navigation }) => {
       onShortPressRelease={() => navigation.navigate("RidingScreen")}
       // debug
     >
-      {/* <View style={styles.container}>
-        <Text style={styles.text} lineBreakMode="clip" numberOfLines={1}>
-          1 Gün
-        </Text>
-        <Text style={styles.text} lineBreakMode="clip" numberOfLines={1}>
-          23:52:27
-        </Text>
+      <View style={styles.container}>
+        <View style={{alignItems:'center'}}>
+          <Text style={styles.text} lineBreakMode="clip" numberOfLines={1}>
+            1 Gün
+          </Text>
+          <Text style={styles.text} lineBreakMode="clip" numberOfLines={1}>
+            23:52:27
+          </Text>
+        </View>
         <Text style={styles.text} lineBreakMode="clip" numberOfLines={1}>
           17₺
         </Text>
-      </View> */}
-        <BinButton />
+      </View>
+      {/* <BinButton /> */}
     </Draggable>
   );
 };
@@ -42,13 +44,13 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     overflow: "hidden",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
     backgroundColor: "rgba(0, 0, 0,0.3)",
     borderColor: Colors.accent,
     borderWidth: 1,
   },
   text: {
-    fontSize: 10,
+    fontSize: 13,
     fontFamily: "content-text-bold",
     color: "#fff",
   },

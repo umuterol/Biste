@@ -27,14 +27,21 @@ const msConvert = (ms) => {
 };
 
 let counterInterval;
-const VerificationInput = () => {
-  const [number, setNumber] = useState();
+const VerificationInput = (props) => {
+  
+  const [number, setNumber] = useState("");
   const [counter, setCounter] = useState(1000 * 60 * 1);
   const [tryVisible, setTryVisible] = useState(false);
 
   const clearCounterInterval = () => {
     clearInterval(counterInterval);
   };
+
+  useEffect(() => {
+    const cleanedNumber = number.replace(/[^\d]/g, "");
+    const isValid = cleanedNumber.length === 6;
+    props.onChangeText(cleanedNumber, isValid);
+  }, [number]);
 
   useEffect(() => {
     if (counter <= 0) {
@@ -72,10 +79,11 @@ const VerificationInput = () => {
     }
   };
 
-  const trySendCode = () => {
+  const sendSmsHandler = () => {
     setTryVisible(false);
     setCounter(1000 * 60 * 3);
     //try send code
+    props.trySendSms();
   };
 
   return (
@@ -85,7 +93,7 @@ const VerificationInput = () => {
           <CustomButton
             style={{ fontSize: 15 }}
             lineColor={Colors.accent}
-            onPress={trySendCode}
+            onPress={sendSmsHandler}
           >
             Tekrar Gönder.
           </CustomButton>

@@ -1,13 +1,23 @@
-import { StyleSheet, View, ScrollView, Text, StatusBar } from "react-native";
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  Text,
+  StatusBar,
+  Image,
+} from "react-native";
 import React from "react";
 import StationCard from "../../components/screens-UI/StationCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 import CustomBadge from "../../components/UI/CustomBadge";
 import Colors from "../../constans/Colors";
+import { useSelector } from "react-redux";
 
 const StationScreen = (props) => {
   const { stationId, color } = props.route.params;
+  const selectedStation = useSelector((state) => state.stations[stationId]);
+  const selectedItems = selectedStation.items;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -18,30 +28,15 @@ const StationScreen = (props) => {
         animated={true}
       />
       <View style={styles.summaryContainer}>
-        <CustomBadge number={5}>
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              width: 45,
-              height: 45,
-              backgroundColor: color,
-              margin: 6,
-              borderRadius: 5,
-            }}
-          >
-            <Text
-              style={{
-                color: "#fff",
-                fontSize: 20,
-                fontFamily: "content-text-bold",
-              }}
-            >
-              {stationId[0].toUpperCase()}
-            </Text>
+        <CustomBadge number={selectedStation.itemsCount}>
+          <View style={styles.countContainer}>
+            <Image
+              source={require("../../assets/images/kilit-noktasi.jpg")}
+              style={{ width: "100%", height: "100%" }}
+            />
           </View>
         </CustomBadge>
-        <CustomBadge number={2}>
+        <CustomBadge number={selectedStation.parkCount}>
           <FontAwesome5
             name="parking"
             size={50}
@@ -49,16 +44,11 @@ const StationScreen = (props) => {
             style={{ margin: 5 }}
           />
         </CustomBadge>
-        <CustomBadge number={3}>
+        <CustomBadge number={selectedStation.bikeCount}>
           <View
             style={{
-              alignItems: "center",
-              justifyContent: "center",
-              width: 45,
-              height: 45,
+              ...styles.countContainer,
               backgroundColor: Colors.primary,
-              margin: 6,
-              borderRadius: 5,
             }}
           >
             <MaterialCommunityIcons
@@ -72,19 +62,14 @@ const StationScreen = (props) => {
       </View>
       <ScrollView style={{ flex: 1 }}>
         <View style={styles.container}>
-          <StationCard color={color} name={stationId[0].toUpperCase() + 1} />
-          <StationCard color={color} name={stationId[0].toUpperCase() + 2} />
-          <StationCard
-            color={color}
-            bike
-            name={stationId[0].toUpperCase() + 3}
-          />
-          <StationCard
-            color={color}
-            bike
-            name={stationId[0].toUpperCase() + 4}
-          />
-          <StationCard color={color} name={stationId[0].toUpperCase() + 5} />
+          {selectedItems.map((item, index) => (
+            <StationCard
+              key={index}
+              color={color}
+              bike={item.bike}
+              name={item.id}
+            />
+          ))}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -96,13 +81,28 @@ export default StationScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
   },
   summaryContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
     marginBottom: 20,
+  },
+  countContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 45,
+    height: 45,
+    margin: 6,
+    borderRadius: 5,
+    overflow: "hidden",
+  },
+  txtStationCount: {
+    color: "#fff",
+    fontSize: 25,
+    fontWeight: "bold",
   },
 });

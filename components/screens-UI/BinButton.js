@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     overflow: "hidden",
     padding: 20,
     flexDirection: "row",
@@ -31,10 +31,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderWidth: 2,
     borderColor: Colors.primary,
-
-    // position: "absolute",
-    // bottom: -10,
-    // alignSelf: "center",
     ...defaultStyles.shadow,
   },
   text: {

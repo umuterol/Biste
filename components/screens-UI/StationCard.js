@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View, ImageBackground, Button } from "react-native";
+import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import React from "react";
 import Card from "../UI/Card";
-import BinButton from "./BinButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const StationName = (props) => (
@@ -12,7 +11,9 @@ const StationName = (props) => (
     }}
   >
     <View style={styles.stationnameContainer}>
-      <Text style={{ ...styles.txtStationname, color: props.color }}>{props.name}</Text>
+      <Text style={{ ...styles.txtStationname, color: props.color }}>
+        {props.name}
+      </Text>
     </View>
   </Card>
 );
@@ -24,13 +25,15 @@ const BikeContent = (props) => (
         <Text
           style={{
             fontFamily: "content-text-bold",
-            fontSize: 17,
+            fontSize: 14,
             color: "#fff",
           }}
         >
           Fiyat/dk
         </Text>
-        <Text style={{ fontFamily: "content-text", color: "#fff" }}>0.25₺</Text>
+        <Text style={{ fontFamily: "content-text", color: "#fff" }}>
+          ₺{props.bike.price.toFixed(2)}
+        </Text>
       </View>
       <View style={styles.divider} />
       <ImageBackground
@@ -38,10 +41,9 @@ const BikeContent = (props) => (
         resizeMode="cover"
         style={styles.image}
       >
-        <Text style={styles.txtBikeId}>#C132</Text>
+        <Text style={styles.txtBikeId}>{props.bike.id}</Text>
       </ImageBackground>
     </View>
-    <BinButton />
   </View>
 );
 
@@ -49,7 +51,7 @@ const ParkContent = () => (
   <View style={styles.parkContainer}>
     <MaterialCommunityIcons
       name="car-brake-parking"
-      size={100}
+      size={75}
       color="#026DBA"
     />
   </View>
@@ -75,33 +77,30 @@ export default StationCard;
 
 const styles = StyleSheet.create({
   container: {
-    width: 350,
-    maxWidth: "90%",
-    minWidth: "80%",
-    height: 250,
-    alignItems: "flex-end",
+    width: "45%",
+    maxWidth: 250,
+    height: 170,
+    alignItems: "center",
     justifyContent: "center",
     // backgroundColor: "#000",
   },
   card: {
-    width: 300,
-    maxWidth: "90%",
-    minWidth: "85%",
-    height: 200,
+    width: "90%",
+    height: 150,
   },
   stationnameCard: {
-    width: 100,
-    height: 100,
+    width: 75,
+    height: 75,
     position: "absolute",
-    bottom: 125,
-    left: -50,
+    top: -10,
+    left: -10,
     borderWidth: 2,
     borderBottomRightRadius: 100,
   },
   txtStationname: {
     color: "#000",
     fontFamily: "content-text-bold",
-    fontSize: 30,
+    fontSize: 20,
   },
   stationnameContainer: {
     flex: 1,
@@ -111,15 +110,17 @@ const styles = StyleSheet.create({
   bikeContainer: {
     flex: 1,
     padding: 20,
+    justifyContent: "flex-end",
   },
   image: {
-    width: 100,
-    height: 100,
-    borderRadius: 20,
+    width: 50,
+    height: 50,
+    borderRadius: 5,
     overflow: "hidden",
     justifyContent: "flex-end",
   },
   txtBikeId: {
+    fontSize: 10,
     fontFamily: "content-text",
     textAlign: "center",
     backgroundColor: "rgba(0,0,0,0.5)",
@@ -128,12 +129,12 @@ const styles = StyleSheet.create({
   bikeInfos: {
     flexDirection: "row",
     alignItems: "flex-end",
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
   },
   divider: {
     height: "100%",
     backgroundColor: "#ccc",
-    width: 0.5,
+    width: 1,
   },
   parkContainer: {
     flex: 1,

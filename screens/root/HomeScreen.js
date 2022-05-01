@@ -2,8 +2,11 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import React from "react";
 import Colors from "../../constans/Colors";
 import Station from "../../components/screens-UI/Station";
+import { useSelector } from "react-redux";
 
 const HomeScreen = (props) => {
+  const stations = useSelector((state) => state.stations);
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView style={{ flex: 1 }}>
@@ -13,8 +16,8 @@ const HomeScreen = (props) => {
             iconName="local-dining"
             title="Yemekhane"
             style={styles.stationDiningHall}
-            noBike
-            noPark
+            noBike={stations["yemekhane"].bikeCount === 0 ? true : false}
+            noPark={stations["yemekhane"].parkCount === 0 ? true : false}
             onPress={() =>
               props.navigation.navigate("StationScreen", {
                 stationId: "yemekhane",
@@ -27,8 +30,8 @@ const HomeScreen = (props) => {
             iconName="open-book"
             title="Kütüphane"
             style={styles.stationLibrary}
-            noBike
-            noPark
+            noBike={stations["kutuphane"].bikeCount === 0 ? true : false}
+            noPark={stations["kutuphane"].parkCount === 0 ? true : false}
             onPress={() =>
               props.navigation.navigate("StationScreen", {
                 stationId: "kutuphane",
@@ -41,8 +44,8 @@ const HomeScreen = (props) => {
             iconName="hotel"
             title="KYK"
             style={styles.stationKyk}
-            noBike
-            noPark
+            noBike={stations["kyk"].bikeCount === 0 ? true : false}
+            noPark={stations["kyk"].parkCount === 0 ? true : false}
             onPress={() =>
               props.navigation.navigate("StationScreen", {
                 stationId: "kyk",
@@ -55,8 +58,8 @@ const HomeScreen = (props) => {
             iconName="university"
             title="Giriş"
             style={styles.stationDoor}
-            noBike
-            noPark
+            noBike={stations["giris"].bikeCount === 0 ? true : false}
+            noPark={stations["giris"].parkCount === 0 ? true : false}
             onPress={() =>
               props.navigation.navigate("StationScreen", {
                 stationId: "giris",
@@ -69,8 +72,8 @@ const HomeScreen = (props) => {
             iconName="engineering"
             title="Mühendislik"
             style={styles.stationEngineering}
-            noBike
-            noPark
+            noBike={stations["muhendislik"].bikeCount === 0 ? true : false}
+            noPark={stations["muhendislik"].parkCount === 0 ? true : false}
             onPress={() =>
               props.navigation.navigate("StationScreen", {
                 stationId: "muhendislik",

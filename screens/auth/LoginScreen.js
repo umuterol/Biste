@@ -1,26 +1,47 @@
-import { StyleSheet, ScrollView, View, Dimensions } from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, View, Alert } from "react-native";
+import React, { useState, useEffect } from "react";
 import CustomBisteScreen from "../../components/CustomBisteScreen";
 import CustomText from "../../components/UI/CustomText";
 import PhoneInput from "../../components/UI/PhoneInput";
 import CustomButton from "../../components/UI/CustomButton";
 import CustomLoading from "../../components/UI/CustomLoading";
+import { useDispatch } from "react-redux";
+import * as authActions from "../../store/actions/auth";
 
 const LoginScreen = (props) => {
   const [phoneNumber, setPhoneNumber] = useState();
   const [isValidPhone, setIsValidPhone] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert(null, error, [{ text: "kapat", style: "default" }]);
+      setError(null);
+    }
+  }, [error]);
 
   const onChangeHandler = (text, isValid) => {
     setIsValidPhone(isValid);
     setPhoneNumber(text);
   };
 
-  const sendSmsHandler = () => {
+  const sendSmsHandler = async () => {
+    if (!isValidPhone) {
+      setError("Lütfen telefon numaranızı kontrol edip tekrar deneyin.");
+      return;
+    }
+
     setIsLoading(true);
-    setTimeout(() => {
+    setTimeout(async () => {
+      try {
+        await dispatch(authActions.sendSms(phoneNumber));
+        props.navigation.navigate("VerificationCodeScreen");
+      } catch (error) {
+        setError(error.message)
+      }
       setIsLoading(false);
-      props.navigation.navigate("VerificationCodeScreen");
     }, 1000);
   };
 

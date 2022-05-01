@@ -3,6 +3,7 @@ import React from "react";
 import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 import IconButton from "../UI/IconButton";
 
+
 const Station = (props) => {
   let WarningComponent = null;
   if (props.noPark && props.noBike)

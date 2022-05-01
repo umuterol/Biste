@@ -1,16 +1,20 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import RidingInfoTouch from "../../components/screens-UI/RidingInfoTouch";
+import Wallet from "../../components/screens-UI/Wallet";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const SettingsScreen = (props) => {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>SettingsScreen</Text>
-      {/* <RidingInfoTouch /> */}
-    </View>
+    <SafeAreaView style={styles.container}>
+      <Wallet />
+    </SafeAreaView>
   );
 };
 
 export default SettingsScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

@@ -3,14 +3,12 @@ import React, { useState, useEffect } from "react";
 import Colors from "../../constans/Colors";
 
 const PhoneInput = (props) => {
-  const [phoneNumber, setPhoneNumber] = useState();
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   useEffect(() => {
-    if (phoneNumber) {
-      const cleanedPhoneNumber = phoneNumber.replace(/[^\d]/g, "");
-      const isValid = cleanedPhoneNumber.length === 10;
-      props.onChangeText(cleanedPhoneNumber, isValid);
-    }
+    const cleanedPhoneNumber = phoneNumber.replace(/[^\d]/g, "");
+    const isValid = cleanedPhoneNumber.length === 10;
+    props.onChangeText(cleanedPhoneNumber, isValid);
   }, [phoneNumber]);
 
   const onChangeHandler = (text) => {

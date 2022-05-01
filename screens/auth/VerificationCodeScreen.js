@@ -1,24 +1,63 @@
-import { StyleSheet, StatusBar, View, Text } from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, StatusBar, View, Alert } from "react-native";
+import React, { useState, useEffect } from "react";
 import CustomBisteScreen from "../../components/CustomBisteScreen";
 import CustomText from "../../components/UI/CustomText";
 import IconButton from "../../components/UI/IconButton";
 import VerificationInput from "../../components/screens-UI/VerificationInput";
 import CustomLoading from "../../components/UI/CustomLoading";
 import Colors from "../../constans/Colors";
+import { useDispatch } from "react-redux";
+import * as authActions from "../../store/actions/auth";
 
 const VerificationCodeScreen = (props) => {
+  const [code, setCode] = useState();
+  const [isValidCode, setIsValidCode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+  const dispatch = useDispatch();
 
-  const submitHandler = () => {
+  useEffect(() => {
+    if (error) {
+      Alert.alert(null, error, [{ text: "kapat" }]);
+      setError(null);
+    }
+  }, [error]);
+
+  const onChangeHandler = (text, isValid) => {
+    setIsValidCode(isValid);
+    setCode(text);
+  };
+
+  const trySendSmsHandler = async () => {
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      props.navigation.reset({
-        index: 0,
-        routes: [{ name: "App" }],
-      });
-    }, 2000);
+    try {
+      await dispatch(authActions.trySendSms());
+    } catch (error) {
+      setError(error.message);
+    }
+    setIsLoading(false);
+  };
+
+  const submitHandler = async () => {
+    if (!isValidCode) {
+      setError("Lütfen güvenlik kodunuzu kontrol edip tekrar deneyin.");
+      return;
+    }
+    setIsLoading(true);
+    setTimeout(async () => {
+      try {
+        await dispatch(authActions.login(code));
+        //because before navigation reset
+        setIsLoading(false);
+        props.navigation.reset({
+          index: 0,
+          routes: [{ name: "App" }],
+        });
+      } catch (error) {
+        setError(error.message);
+        setIsLoading(false);
+      }
+    }, 1000);
   };
 
   return (
@@ -36,7 +75,10 @@ const VerificationCodeScreen = (props) => {
           <CustomText style={styles.text}>
             *Sms ile gelen tek kullanımlık güvenlik kodunu girin.
           </CustomText>
-          <VerificationInput />
+          <VerificationInput
+            onChangeText={onChangeHandler}
+            trySendSms={trySendSmsHandler}
+          />
           <View style={styles.actionContainer}>
             <IconButton
               id="Ionicons"
