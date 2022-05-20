@@ -1,4 +1,4 @@
-import { SEND_SMS, WRONG_CODE , AUTHENTICATE } from "../actions/auth";
+import { SEND_SMS, WRONG_CODE, AUTHENTICATE, LOGOUT } from "../actions/auth";
 
 const initialState = {
   phoneNumber: null,
@@ -21,13 +21,15 @@ export default (state = initialState, action) => {
         ...state,
         numberOfWrong: +state.numberOfWrong + 1,
       };
-      case AUTHENTICATE:
-        return{
-          ...initialState,
-          phoneNumber:action.value.phoneNumber,
-          token:action.value.token,
-          email:action.value.email
-        }
+    case AUTHENTICATE:
+      return {
+        ...initialState,
+        phoneNumber: action.value.phoneNumber,
+        token: action.value.token,
+        email: action.value.email,
+      };
+    case LOGOUT:
+      return initialState;
     default:
       return state;
   }

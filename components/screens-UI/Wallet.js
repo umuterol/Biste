@@ -1,15 +1,31 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Colors from "../../constans/Colors";
-import { SimpleLineIcons } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, SimpleLineIcons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 const Wallet = () => {
+  const { email } = useSelector((state) => state.auth);
+
+  if (!email) {
+    return (
+      <View style={styles.container}>
+        <View style={{ alignItems: "center" }}>
+          <FontAwesome name="user-times" size={24} color="#fff" />
+          <Text style={styles.text}> Onaylanmamış hesap</Text>
+        </View>
+      </View>
+    );
+  }
+
+  let name = email.split(".")[0];
+  name = name.charAt(0).toUpperCase() + name.slice(1);
+
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row" }}>
         <FontAwesome name="user" size={24} color="#fff" />
-        <Text style={styles.text}> Merhaba Umut</Text>
+        <Text style={styles.text}> Merhaba {name}</Text>
       </View>
       <View style={{ alignItems: "center", justifyContent: "center" }}>
         <SimpleLineIcons name="present" size={24} color="#fff" />

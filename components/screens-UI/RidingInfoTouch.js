@@ -1,11 +1,54 @@
 import { StyleSheet, Text, View, Dimensions } from "react-native";
-import React from "react";
+import React , {useState,useEffect} from "react";
 import Draggable from "react-native-draggable";
 import Colors from "../../constans/Colors";
 import BinButton from "./BinButton";
+import { useSelector } from "react-redux";
+
+const distanceTime = (startingDate) => {
+  const totalMS = new Date().getTime() - startingDate.getTime();
+  const totalS = totalMS / 1000;
+  const second = parseInt(totalS % 60);
+  const minute = parseInt(totalS / 60);
+
+  let stringTime = minute + ":";
+  if (second < 10) stringTime += "0" + second;
+  else stringTime += second;
+
+  return {
+    minute,
+    second,
+    stringTime,
+  };
+};
+
+const RideInfo = () => {
+  const {bikeId,price,startingDate}=useSelector(state => state.ride);
+  const [rideTime,setRideTime] = useState(distanceTime(startingDate));
+
+  
+  useEffect(()=>{
+    const interval = setInterval(() => {
+      setRideTime(distanceTime(startingDate))
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    }
+  },[])
+
+  return <View style={styles.container}>
+    <View style={{ alignItems: "center" }}>
+      <Text style={styles.text} lineBreakMode="clip" numberOfLines={1}>
+        {rideTime.stringTime}
+      </Text>
+    </View>
+  </View>;
+};
 
 const RidingInfoTouch = ({ navigation }) => {
+  const ride = useSelector((state) => state.ride);
   const { width, height } = Dimensions.get("window");
+
   return (
     <Draggable
       x={width - 80}
@@ -17,20 +60,7 @@ const RidingInfoTouch = ({ navigation }) => {
       onShortPressRelease={() => navigation.navigate("RidingScreen")}
       // debug
     >
-      <View style={styles.container}>
-        <View style={{alignItems:'center'}}>
-          <Text style={styles.text} lineBreakMode="clip" numberOfLines={1}>
-            1 Gün
-          </Text>
-          <Text style={styles.text} lineBreakMode="clip" numberOfLines={1}>
-            23:52:27
-          </Text>
-        </View>
-        <Text style={styles.text} lineBreakMode="clip" numberOfLines={1}>
-          17₺
-        </Text>
-      </View>
-      {/* <BinButton /> */}
+      {ride.bikeId ? <RideInfo /> : <BinButton />}
     </Draggable>
   );
 };
@@ -50,7 +80,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   text: {
-    fontSize: 13,
+    fontSize: 17,
     fontFamily: "content-text-bold",
     color: "#fff",
   },

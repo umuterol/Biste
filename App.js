@@ -6,13 +6,16 @@ import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import notificationsReducers from "./store/reducers/notifications";
 import stationsReducers from "./store/reducers/stations";
+import rideReducers from "./store/reducers/ride";
 import authReducers from "./store/reducers/auth";
 import AppLoading from "./navigation/AppLoading";
+import ride from "./store/reducers/ride";
 
 const rootReducer = combineReducers({
   notifications: notificationsReducers,
   stations: stationsReducers,
   auth: authReducers,
+  ride: rideReducers,
 });
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 

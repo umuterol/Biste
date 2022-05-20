@@ -13,10 +13,9 @@ const CustomBadge = ({ children, bgColor, number, color }) => {
         </Text>
       }
       IconBadgeStyle={{
-        width: 20,
-        height: 20,
         backgroundColor: bgColor || '#ff4444',
       }}
+      // Hidden={!number || number < 0}
     />
   );
 };

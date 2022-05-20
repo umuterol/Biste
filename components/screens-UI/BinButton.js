@@ -1,18 +1,18 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import Colors from "../../constans/Colors";
 import defaultStyles from "../../constans/default-styles";
 
 const BinButton = (props) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={props.onPress}>
+    <View style={styles.container}>
       <Text style={styles.text}>B</Text>
       <Image
         source={require("../../assets/images/istei.png")}
         style={styles.image}
       />
       <Text style={styles.text}>N</Text>
-    </TouchableOpacity>
+    </View>
   );
 };
 
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     overflow: "hidden",
     padding: 20,
     flexDirection: "row",

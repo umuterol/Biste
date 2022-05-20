@@ -161,6 +161,7 @@ export default ({ initialRouteName }) => {
         }}
         initialRouteName={initialRouteName || "Auth"}
       >
+        {/* Root Screeen */}
         <Stack.Screen name="Auth" component={AuthStackNavigator} />
         <Stack.Screen name="App" component={AppTabNavigator} />
         <Stack.Screen name="RidingScreen" component={Screens.RidingScreen} />

@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const SEND_SMS = "SEND_SMS";
 export const WRONG_CODE = "WRONG_CODE";
 export const AUTHENTICATE = "AUTHENTICATE";
+export const LOGOUT = "LOGOUT";
 
 export const sendSms = (phoneNumber) => {
   return async (dispatch) => {
@@ -17,10 +18,10 @@ export const sendSms = (phoneNumber) => {
 };
 
 export const trySendSms = () => {
-  return async (dispatch , getState) => {
+  return async (dispatch, getState) => {
     //request api
     // code ...
-    const {phoneNumber} = getState().auth;
+    const { phoneNumber } = getState().auth;
     dispatch(sendSms(phoneNumber));
   };
 };
@@ -33,6 +34,13 @@ export const authenticate = (phoneNumber, token, email) => {
       token,
       email,
     },
+  };
+};
+
+export const logout = () => {
+  AsyncStorage.clear();
+  return {
+    type: LOGOUT,
   };
 };
 
@@ -58,8 +66,8 @@ export const login = (enteredCode) => {
       dispatch(
         authenticate(
           auth.phoneNumber,
+          "fffxafUmutEROLfasda",
           "umuterol.mdbf18@iste.edu.tr",
-          "fffxafUmutEROLfasda"
         )
       );
       storeData({
